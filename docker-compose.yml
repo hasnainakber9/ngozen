@@ -1,0 +1,8 @@
+services:
+  ngozen:
+    build: .
+    ports:
+      - "8080:8080"
+    environment:
+      NGOZEN_SECRET_KEY: "local-dev-change-me"
+      DEMO_MODE: "true"
