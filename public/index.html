@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Ngozen — Face verification without face exposure</title>
+  <link rel="stylesheet" href="/style.css" />
+</head>
+<body>
+  <main class="shell">
+    <section class="hero card">
+      <div>
+        <p class="eyebrow">Privacy-first verification wallet + SDK</p>
+        <h1>Verify your humanity. Protect your face.</h1>
+        <p class="lead">
+          Ngozen lets a user prove they are a real, live, face-verified person without sending
+          their selfie, video, face embedding, ID card, or legal name to partner apps.
+        </p>
+        <div class="badges">
+          <span>No raw face sent to partner</span>
+          <span>Pairwise IDs</span>
+          <span>Signed proof tokens</span>
+        </div>
+      </div>
+      <div class="privacy-box">
+        <h2>Partner app receives</h2>
+        <ul>
+          <li>real_human: true</li>
+          <li>face_verified: true</li>
+          <li>liveness_verified: true</li>
+          <li>duplicate_risk: low</li>
+        </ul>
+        <h2>Partner app does not receive</h2>
+        <ul class="nope">
+          <li>Selfie / video</li>
+          <li>Face embedding</li>
+          <li>Legal name</li>
+          <li>Reusable universal ID</li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="grid">
+      <div class="card panel">
+        <h2>1. Start private verification</h2>
+        <label>
+          Email, optional demo identifier
+          <input id="email" type="email" placeholder="you@example.com" autocomplete="email" />
+        </label>
+        <div class="claims">
+          <label><input type="checkbox" value="real_human" checked /> Real human</label>
+          <label><input type="checkbox" value="face_verified" checked /> Face verified</label>
+          <label><input type="checkbox" value="liveness_verified" checked /> Liveness verified</label>
+          <label><input type="checkbox" value="duplicate_risk" checked /> Duplicate risk</label>
+        </div>
+        <button id="startSession">Create verification session</button>
+        <pre id="sessionOut" class="output small"></pre>
+      </div>
+
+      <div class="card panel">
+        <h2>2. Camera proof, no image upload</h2>
+        <p class="muted">
+          This demo uses browser-side face/quality metrics only. The server receives metrics,
+          not your face image. Production should replace demo scoring with a certified liveness provider.
+        </p>
+        <div class="camera-wrap">
+          <video id="video" autoplay playsinline muted></video>
+          <canvas id="canvas" width="480" height="360"></canvas>
+        </div>
+        <div class="challenge" id="challengeBox">Create a session first.</div>
+        <div class="buttons">
+          <button id="startCamera">Start camera</button>
+          <button id="captureMetric">Capture metric</button>
+          <button id="completeAction">Mark current challenge done</button>
+          <button id="submitProof" class="primary">Submit proof</button>
+        </div>
+        <pre id="cameraOut" class="output small"></pre>
+      </div>
+    </section>
+
+    <section class="grid">
+      <div class="card panel">
+        <h2>3. User wallet proof</h2>
+        <p class="muted">The user receives a signed token. It exposes claims, not the face.</p>
+        <textarea id="tokenBox" readonly placeholder="Signed partner token appears here"></textarea>
+      </div>
+
+      <div class="card panel">
+        <h2>4. Partner app verifies token</h2>
+        <label>
+          Partner app ID
+          <input id="partnerId" value="demo_partner_app" />
+        </label>
+        <label>
+          Partner demo access code
+          <input id="partnerKey" value="demo_partner_access_code" />
+        </label>
+        <button id="verifyToken" class="primary">Verify as partner app</button>
+        <pre id="partnerOut" class="output"></pre>
+      </div>
+    </section>
+
+    <section class="card notes">
+      <h2>Production notes</h2>
+      <p>
+        The MVP is intentionally privacy-preserving, but demo scoring is not production security.
+        For a real product, connect a liveness/face provider in <code>adapters/</code>, enable device attestation,
+        add rate limits, configure a strong server signing secret, and do fairness/security testing.
+      </p>
+    </section>
+  </main>
+
+  <script src="/app.js"></script>
+</body>
+</html>
