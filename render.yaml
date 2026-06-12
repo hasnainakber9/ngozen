@@ -1,0 +1,13 @@
+services:
+  - type: web
+    name: ngozen
+    env: docker
+    plan: free
+    autoDeploy: true
+    envVars:
+      - key: NGOZEN_SECRET_KEY
+        generateValue: true
+      - key: DEMO_MODE
+        value: true
+      - key: PORT
+        value: 8080
